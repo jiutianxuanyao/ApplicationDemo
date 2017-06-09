@@ -1,0 +1,76 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'byron'
+            keyPassword 'byron123456'
+            storeFile file('/Users/company-ios/Android/ProjectPackaging/demo/demo.jks')
+            storePassword 'byron123456'
+        }
+    }
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "com.byron.applicationdemo"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+    //重新设置源码路径
+    /*sourceSets {
+        main {
+            java {
+                srcDir 'src/java'
+            }
+            resources {
+                srcDir 'src/resources'
+            }
+        }
+    }*/
+    /*为了替换默认的源文件目录列表，可以使用srcDirs来指定目录数组。这也是一种不同的使用方式：
+    sourceSets {
+        main.java.srcDirs = ['src/java']
+        main.resources.srcDirs = ['src/resources']
+    }*/
+    /*sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+
+            java.srcDirs = ['src']
+
+            resources.srcDirs = ['src']
+
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        androidTest.setRoot('tests')
+    }*/
+
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+}
